@@ -1,73 +1,360 @@
-# NestJS REST API boilerplate 🇺🇦
+# NestJS Boilerplate
 
-[![image](https://github.com/brocoders/nestjs-boilerplate/assets/72293912/197da43e-02f4-4895-8d3e-b7a42a591c26)](https://github.com/new?template_name=nestjs-boilerplate&template_owner=brocoders)
+A comprehensive, production-ready NestJS boilerplate with TypeScript, featuring authentication, authorization, file management, and a complete blog system with posts, categories, and tags.
 
-![github action status](https://github.com/brocoders/nestjs-boilerplate/actions/workflows/docker-e2e.yml/badge.svg)
-[![renovate](https://img.shields.io/badge/renovate-enabled-%231A1F6C?logo=renovatebot)](https://app.renovatebot.com/dashboard)
-[![Static Badge](https://img.shields.io/badge/supported_by-brocoders-d91965?logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB3aWR0aD0iMTMwIiBoZWlnaHQ9IjE4NyIgdmlld0JveD0iMCAwIDEzMCAxODciIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI%2BCjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMF83NzExXzQ4OTEpIj4KPHBhdGggZD0iTTc1Ljk5NjcgNDUuNzUwNkM2NS4xMDg5IDQ2Ljg2MSA1Ny45MjMgNTguNDA5NyA2Mi4yNzgxIDY4Ljg0OEwxMDguNDQyIDE4N0w3My42MDEzIDE1NS4wMTlIMzQuODQwOUMyMC42ODY4IDE1NS4wMTkgOS4zNjM0OSAxNDMuNDcgOS4zNjM0OSAxMjkuMDM0Vjk0LjYxMDVDOS4zNjM0OSA5Mi4xNjc1IDguNDkyNDYgODkuNzI0NSA2Ljc1MDQyIDg3Ljk0NzdMMCA4MS4wNjNMNi43NTA0MiA3NC4xNzgxQzguNDkyNDYgNzIuNDAxNCA5LjM2MzQ5IDY5Ljk1ODQgOS4zNjM0OSA2Ny41MTU0VjMxLjA5MjZDOS4zNjM0OSAxMy43Njk2IDIzLjA4MjEgMCAzOS44NDkyIDBINTguMTQwN0w3NS45OTY3IDQ1Ljc1MDZaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTI1LjY0NiAxMTIuMzc4Vjk0LjgzMjdDMTI1LjY0NiA5My43MjIyIDEyNi4wODEgOTIuNjExOCAxMjYuOTUyIDkxLjcyMzRMMTMwLjAwMSA4OC4zOTIxTDEyNi45NTIgODUuMDYwN0MxMjYuMDgxIDg0LjE3MjQgMTI1LjY0NiA4My4wNjE5IDEyNS42NDYgODEuOTUxNFY2OS43MzY1QzEyNS42NDYgNTYuNDExMSAxMTQuOTc2IDQ1Ljc1MDcgMTAyLjEyOCA0NS43NTA3SDc1Ljk5NzNMMTA1LjYxMiAxMzAuODExQzEwNS42MTIgMTMwLjgxMSAxMTAuNjIgMTMwLjgxMSAxMTAuODM4IDEzMC44MTFDMTE5LjExMyAxMjkuMDM1IDEyNS42NDYgMTIxLjQ4NCAxMjUuNjQ2IDExMi4zNzhaIiBmaWxsPSJ3aGl0ZSIvPgo8L2c%2BCjxkZWZzPgo8Y2xpcFBhdGggaWQ9ImNsaXAwXzc3MTFfNDg5MSI%2BCjxyZWN0IHdpZHRoPSIxMzAiIGhlaWdodD0iMTg3IiBmaWxsPSJ3aGl0ZSIvPgo8L2NsaXBQYXRoPgo8L2RlZnM%2BCjwvc3ZnPgo%3D&logoColor=d91965)](https://brocoders.com/)
-[![Discord Badge](https://img.shields.io/badge/discord-NodeJS_boilerplate-d91965?style=flat&labelColor=5866f2&logo=discord&logoColor=white&link=https://discord.com/channels/520622812742811698/1197293125434093701)](https://discord.com/channels/520622812742811698/1197293125434093701)
+## 🚀 Features
 
-<br />
-<p align="center"><a href="https://discord.com/channels/520622812742811698/1197293125434093701"><img src="https://github.com/brocoders/nestjs-boilerplate/assets/72293912/c9d5fbf0-b56d-46b5-bb30-f96f44764bae" width="300"/></a></p>
-<br />
+### Core Features
+- **NestJS Framework** - Progressive Node.js framework for building efficient server-side applications
+- **TypeScript** - Full TypeScript support with strict type checking
+- **PostgreSQL Database** - Relational database with TypeORM integration
+- **JWT Authentication** - Secure authentication with access and refresh tokens
+- **Social Authentication** - Login with Google, Facebook, and Apple
+- **Role-based Authorization** - Admin and user roles with guards
+- **File Upload** - Support for local storage, AWS S3, and S3 presigned URLs
+- **Internationalization** - Multi-language support with i18n
+- **Email Service** - Email notifications and templates
+- **Swagger Documentation** - Auto-generated API documentation
+- **Rate Limiting** - API rate limiting and security
+- **Validation** - Request validation with class-validator
+- **Testing** - Unit and E2E tests with Jest
 
-## Description <!-- omit in toc -->
+### Blog System Features
+- **Posts Management** - Full CRUD operations for blog posts
+- **Categories** - Hierarchical category system
+- **Tags** - Many-to-many tagging system
+- **Media Management** - Featured images and file attachments
+- **SEO Optimization** - Meta tags, keywords, and descriptions
+- **Publishing System** - Draft, published, and archived statuses
+- **View Counter** - Track post views
+- **Slug Generation** - SEO-friendly URLs
 
-NestJS REST API boilerplate for a typical project
+## 📋 Prerequisites
 
-[Full documentation here](/docs/readme.md)
+- Node.js 18+ 
+- PostgreSQL 12+
+- Docker (optional, for containerized setup)
 
-Demo: <https://nestjs-boilerplate-test.herokuapp.com/docs>
+## 🛠️ Installation
 
-A fully compatible frontend boilerplate: <https://github.com/brocoders/extensive-react-boilerplate>
+### 1. Clone the repository
 
-Belongs to the [bc boilerplates](https://bcboilerplates.com/) ecosystem
+```bash
+git clone <repository-url>
+cd nestjs-boilerplate
+```
 
-<https://github.com/user-attachments/assets/a66f114a-c714-4036-8eeb-20cbf04ae985>
+### 2. Install dependencies
 
-## Table of Contents <!-- omit in toc -->
+```bash
+npm install
+```
 
-- [Features](#features)
-- [Contributors](#contributors)
-- [Support](#support)
+### 3. Environment Configuration
 
-## Features
+Copy the environment example file:
 
-- [x] Database. Support [TypeORM](https://www.npmjs.com/package/typeorm) and [Mongoose](https://www.npmjs.com/package/mongoose).
-- [x] Seeding.
-- [x] Config Service ([@nestjs/config](https://www.npmjs.com/package/@nestjs/config)).
-- [x] Mailing ([nodemailer](https://www.npmjs.com/package/nodemailer)).
-- [x] Sign in and sign up via email.
-- [x] Social sign in (Apple, Facebook, Google).
-- [x] Admin and User roles.
-- [x] Internationalization/Translations (I18N) ([nestjs-i18n](https://www.npmjs.com/package/nestjs-i18n)).
-- [x] File uploads. Support local and Amazon S3 drivers.
-- [x] Swagger.
-- [x] E2E and units tests.
-- [x] Docker.
-- [x] CI (Github Actions).
+```bash
+cp env-example-relational .env
+```
 
-## Contributors
+Configure your environment variables in `.env`:
 
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tbody>
-    <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Shchepotin"><img src="https://avatars.githubusercontent.com/u/6001723?v=4?s=100" width="100px;" alt="Vladyslav Shchepotin"/><br /><sub><b>Vladyslav Shchepotin</b></sub></a><br /><a href="#maintenance-Shchepotin" title="Maintenance">🚧</a> <a href="#doc-Shchepotin" title="Documentation">📖</a> <a href="#code-Shchepotin" title="Code">💻</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/SergeiLomako"><img src="https://avatars.githubusercontent.com/u/31205374?v=4?s=100" width="100px;" alt="SergeiLomako"/><br /><sub><b>SergeiLomako</b></sub></a><br /><a href="#code-SergeiLomako" title="Code">💻</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/ElenVlass"><img src="https://avatars.githubusercontent.com/u/72293912?v=4?s=100" width="100px;" alt="Elena Vlasenko"/><br /><sub><b>Elena Vlasenko</b></sub></a><br /><a href="#doc-ElenVlass" title="Documentation">📖</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="http://brocoders.com"><img src="https://avatars.githubusercontent.com/u/226194?v=4?s=100" width="100px;" alt="Rodion"/><br /><sub><b>Rodion</b></sub></a><br /><a href="#business-sars" title="Business development">💼</a></td>
-    </tr>
-  </tbody>
-</table>
+```env
+NODE_ENV=development
+APP_PORT=3000
+APP_NAME="NestJS API"
+API_PREFIX=api
+FRONTEND_DOMAIN=http://localhost:3000
+BACKEND_DOMAIN=http://localhost:3000
 
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
+# Database
+DATABASE_TYPE=postgres
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_USERNAME=your_username
+DATABASE_PASSWORD=your_password
+DATABASE_NAME=nestjs_boilerplate
 
-<!-- ALL-CONTRIBUTORS-LIST:END -->
+# JWT Secrets (generate with: npm run app:config)
+AUTH_JWT_SECRET=your_jwt_secret
+AUTH_REFRESH_SECRET=your_refresh_secret
+AUTH_FORGOT_SECRET=your_forgot_secret
+AUTH_CONFIRM_EMAIL_SECRET=your_confirm_email_secret
 
-## Support
+# Social Auth (optional)
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+FACEBOOK_APP_ID=your_facebook_app_id
+FACEBOOK_APP_SECRET=your_facebook_app_secret
 
-If you seek consulting, support, or wish to collaborate, please contact us via [boilerplates@brocoders.com](mailto:boilerplates@brocoders.com). For any inquiries regarding boilerplates, feel free to ask on [GitHub Discussions](https://github.com/brocoders/nestjs-boilerplate/discussions) or [Discord](https://discord.com/channels/520622812742811698/1197293125434093701).
+# File Storage
+FILE_DRIVER=local
+# For S3: s3 or s3-presigned
+ACCESS_KEY_ID=your_aws_access_key
+SECRET_ACCESS_KEY=your_aws_secret_key
+AWS_S3_REGION=us-east-1
+AWS_DEFAULT_S3_BUCKET=your-bucket-name
+
+# Email (optional)
+MAIL_HOST=localhost
+MAIL_PORT=1025
+MAIL_USERNAME=
+MAIL_PASSWORD=
+MAIL_IGNORE_TLS=true
+MAIL_SECURE=false
+MAIL_REQUIRE_TLS=false
+MAIL_DEFAULT_EMAIL=noreply@example.com
+MAIL_DEFAULT_NAME="No Reply"
+MAIL_CLIENT_PORT=1080
+```
+
+### 4. Database Setup
+
+Run database migrations:
+
+```bash
+npm run migration:run
+```
+
+Seed the database with initial data:
+
+```bash
+npm run seed:run:relational
+```
+
+### 5. Generate JWT Secrets
+
+Generate secure JWT secrets:
+
+```bash
+npm run app:config
+```
+
+## 🏃‍♂️ Running the Application
+
+### Development Mode
+
+```bash
+npm run start:dev
+```
+
+The API will be available at `http://localhost:3000`
+
+### Production Mode
+
+```bash
+npm run build
+npm run start:prod
+```
+
+### Using Docker
+
+```bash
+docker-compose up -d
+```
+
+## 📖 API Documentation
+
+Once the application is running, you can access:
+
+- **Swagger UI**: `http://localhost:3000/docs`
+- **API**: `http://localhost:3000/api/v1`
+
+## 🔐 Authentication
+
+The API uses JWT tokens for authentication:
+
+### Admin Login
+```bash
+POST /api/v1/auth/email/login
+{
+  "email": "admin@example.com",
+  "password": "secret"
+}
+```
+
+### User Registration
+```bash
+POST /api/v1/auth/email/register
+{
+  "email": "user@example.com",
+  "password": "password",
+  "firstName": "John",
+  "lastName": "Doe"
+}
+```
+
+### Social Authentication
+- `POST /api/v1/auth/google/login`
+- `POST /api/v1/auth/facebook/login`
+- `POST /api/v1/auth/apple/login`
+
+## 📝 API Endpoints
+
+### Posts
+- `GET /api/v1/posts` - List posts with pagination
+- `GET /api/v1/posts/:id` - Get single post
+- `POST /api/v1/posts` - Create post (Admin only)
+- `PATCH /api/v1/posts/:id` - Update post (Admin only)
+- `DELETE /api/v1/posts/:id` - Delete post (Admin only)
+
+### Categories
+- `GET /api/v1/categories` - List categories
+- `GET /api/v1/categories/:id` - Get single category
+- `POST /api/v1/categories` - Create category (Admin only)
+- `PATCH /api/v1/categories/:id` - Update category (Admin only)
+- `DELETE /api/v1/categories/:id` - Delete category (Admin only)
+
+### Tags
+- `GET /api/v1/tags` - List tags
+- `GET /api/v1/tags/:id` - Get single tag
+- `POST /api/v1/tags` - Create tag (Admin only)
+- `PATCH /api/v1/tags/:id` - Update tag (Admin only)
+- `DELETE /api/v1/tags/:id` - Delete tag (Admin only)
+
+### Users
+- `GET /api/v1/users` - List users (Admin only)
+- `GET /api/v1/users/:id` - Get user (Admin only)
+- `POST /api/v1/users` - Create user (Admin only)
+- `PATCH /api/v1/users/:id` - Update user (Admin only)
+- `DELETE /api/v1/users/:id` - Delete user (Admin only)
+
+### Files
+- `POST /api/v1/files/upload` - Upload file
+- `GET /api/v1/files/:path` - Get file
+
+## 🏗️ Project Structure
+
+```
+src/
+├── auth/                 # Authentication module
+├── users/                # User management
+├── posts/                # Blog posts
+├── categories/           # Post categories
+├── tags/                 # Post tags
+├── files/                # File management
+├── mail/                 # Email service
+├── config/               # Configuration
+├── database/             # Database config & migrations
+├── utils/                # Shared utilities
+└── i18n/                 # Internationalization
+```
+
+## 🧪 Testing
+
+### Unit Tests
+```bash
+npm run test
+```
+
+### E2E Tests
+```bash
+npm run test:e2e
+```
+
+### Test Coverage
+```bash
+npm run test:cov
+```
+
+### Docker E2E Tests
+```bash
+npm run test:e2e:relational:docker
+```
+
+## 📊 Database Management
+
+### Create Migration
+```bash
+npm run migration:create -- src/database/migrations/CreateNewTable
+```
+
+### Generate Migration
+```bash
+npm run migration:generate -- src/database/migrations/AddNewColumn
+```
+
+### Run Migrations
+```bash
+npm run migration:run
+```
+
+### Revert Migration
+```bash
+npm run migration:revert
+```
+
+## 🎨 Code Generation
+
+### Generate Resource
+```bash
+npm run generate:resource:relational
+```
+
+### Add Property to Resource
+```bash
+npm run add:property:to-relational
+```
+
+## 🔧 Development Tools
+
+### Formatting
+```bash
+npm run format
+```
+
+### Linting
+```bash
+npm run lint
+```
+
+## 🚀 Deployment
+
+### Build for Production
+```bash
+npm run build
+```
+
+### Environment Variables for Production
+Ensure all required environment variables are set:
+- `NODE_ENV=production`
+- Database connection details
+- JWT secrets
+- File storage configuration
+- Email service configuration
+
+## 📚 Documentation
+
+Additional documentation is available in the `/docs` folder:
+
+- [Architecture](./docs/architecture.md)
+- [Authentication](./docs/auth.md)
+- [Database](./docs/database.md)
+- [File Uploading](./docs/file-uploading.md)
+- [Installing and Running](./docs/installing-and-running.md)
+- [Tests](./docs/tests.md)
+- [Translations](./docs/translations.md)
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Built with [NestJS](https://nestjs.com/)
+- Database management with [TypeORM](https://typeorm.io/)
+- Authentication with [JWT](https://jwt.io/)
+- API documentation with [Swagger](https://swagger.io/)
+
+## 📞 Support
+
+If you have any questions or issues, please open an issue on GitHub.
