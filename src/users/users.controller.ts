@@ -25,16 +25,18 @@ import { Roles } from '../roles/roles.decorator';
 import { RoleEnum } from '../roles/roles.enum';
 import { AuthGuard } from '@nestjs/passport';
 
-import {
-  InfinityPaginationResponse,
-  InfinityPaginationResponseDto,
-} from '../utils/dto/infinity-pagination-response.dto';
+import { InfinityPaginationResponseDto } from '../utils/dto/infinity-pagination-response.dto';
 import { NullableType } from '../utils/types/nullable.type';
 import { QueryUserDto } from './dto/query-user.dto';
 import { User } from './domain/user';
 import { UsersService } from './users.service';
 import { RolesGuard } from '../roles/roles.guard';
 import { infinityPagination } from '../utils/infinity-pagination';
+import { ApiResponseHelper, ApiResponse } from '../utils/api-response';
+import {
+  ApiResponseDto,
+  ApiPaginatedResponseDto,
+} from '../utils/dto/api-response.dto';
 
 @ApiBearerAuth()
 @Roles(RoleEnum.admin)
@@ -48,19 +50,24 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @ApiCreatedResponse({
-    type: User,
+    description: 'User created successfully',
+    type: ApiResponseDto,
   })
   @SerializeOptions({
     groups: ['admin'],
   })
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  create(@Body() createProfileDto: CreateUserDto): Promise<User> {
-    return this.usersService.create(createProfileDto);
+  async create(
+    @Body() createProfileDto: CreateUserDto,
+  ): Promise<ApiResponse<User>> {
+    const user = await this.usersService.create(createProfileDto);
+    return ApiResponseHelper.success(user, 'User created successfully');
   }
 
   @ApiOkResponse({
-    type: InfinityPaginationResponse(User),
+    description: 'Users retrieved successfully',
+    type: ApiPaginatedResponseDto,
   })
   @SerializeOptions({
     groups: ['admin'],
@@ -69,14 +76,14 @@ export class UsersController {
   @HttpCode(HttpStatus.OK)
   async findAll(
     @Query() query: QueryUserDto,
-  ): Promise<InfinityPaginationResponseDto<User>> {
+  ): Promise<ApiResponse<InfinityPaginationResponseDto<User>>> {
     const page = query?.page ?? 1;
     let limit = query?.limit ?? 10;
     if (limit > 50) {
       limit = 50;
     }
 
-    return infinityPagination(
+    const paginationResult = infinityPagination(
       await this.usersService.findManyWithPagination({
         filterOptions: query?.filters,
         sortOptions: query?.sort,
@@ -87,10 +94,16 @@ export class UsersController {
       }),
       { page, limit },
     );
+
+    return ApiResponseHelper.success(
+      paginationResult,
+      'Users retrieved successfully',
+    );
   }
 
   @ApiOkResponse({
-    type: User,
+    description: 'User retrieved successfully',
+    type: ApiResponseDto,
   })
   @SerializeOptions({
     groups: ['admin'],
@@ -102,12 +115,19 @@ export class UsersController {
     type: String,
     required: true,
   })
-  findOne(@Param('id') id: User['id']): Promise<NullableType<User>> {
-    return this.usersService.findById(id);
+  async findOne(
+    @Param('id') id: User['id'],
+  ): Promise<ApiResponse<NullableType<User>>> {
+    const user = await this.usersService.findById(id);
+    if (!user) {
+      return ApiResponseHelper.error('User not found', 'NOT_FOUND');
+    }
+    return ApiResponseHelper.success(user, 'User retrieved successfully');
   }
 
   @ApiOkResponse({
-    type: User,
+    description: 'User updated successfully',
+    type: ApiResponseDto,
   })
   @SerializeOptions({
     groups: ['admin'],
@@ -119,21 +139,30 @@ export class UsersController {
     type: String,
     required: true,
   })
-  update(
+  async update(
     @Param('id') id: User['id'],
     @Body() updateProfileDto: UpdateUserDto,
-  ): Promise<User | null> {
-    return this.usersService.update(id, updateProfileDto);
+  ): Promise<ApiResponse<User | null>> {
+    const user = await this.usersService.update(id, updateProfileDto);
+    if (!user) {
+      return ApiResponseHelper.error('User not found', 'NOT_FOUND');
+    }
+    return ApiResponseHelper.success(user, 'User updated successfully');
   }
 
+  @ApiOkResponse({
+    description: 'User deleted successfully',
+    type: ApiResponseDto,
+  })
   @Delete(':id')
   @ApiParam({
     name: 'id',
     type: String,
     required: true,
   })
-  @HttpCode(HttpStatus.NO_CONTENT)
-  remove(@Param('id') id: User['id']): Promise<void> {
-    return this.usersService.remove(id);
+  @HttpCode(HttpStatus.OK)
+  async remove(@Param('id') id: User['id']): Promise<ApiResponse<null>> {
+    await this.usersService.remove(id);
+    return ApiResponseHelper.success(null, 'User deleted successfully');
   }
 }

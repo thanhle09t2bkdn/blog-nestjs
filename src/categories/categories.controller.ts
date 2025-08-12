@@ -25,14 +25,16 @@ import { Roles } from '../roles/roles.decorator';
 import { RoleEnum } from '../roles/roles.enum';
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from '../roles/roles.guard';
-import {
-  InfinityPaginationResponse,
-  InfinityPaginationResponseDto,
-} from '../utils/dto/infinity-pagination-response.dto';
+import { InfinityPaginationResponseDto } from '../utils/dto/infinity-pagination-response.dto';
 import { NullableType } from '../utils/types/nullable.type';
 import { Category } from './domain/category';
 import { CategoriesService } from './categories.service';
 import { infinityPagination } from '../utils/infinity-pagination';
+import { ApiResponseHelper, ApiResponse } from '../utils/api-response';
+import {
+  ApiResponseDto,
+  ApiPaginatedResponseDto,
+} from '../utils/dto/api-response.dto';
 
 @ApiTags('Categories')
 @Controller({
@@ -46,29 +48,34 @@ export class CategoriesController {
   @Roles(RoleEnum.admin)
   @UseGuards(AuthGuard('jwt'), RolesGuard)
   @ApiCreatedResponse({
-    type: Category,
+    description: 'Category created successfully',
+    type: ApiResponseDto,
   })
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  create(@Body() createCategoryDto: CreateCategoryDto): Promise<Category> {
-    return this.categoriesService.create(createCategoryDto);
+  async create(
+    @Body() createCategoryDto: CreateCategoryDto,
+  ): Promise<ApiResponse<Category>> {
+    const category = await this.categoriesService.create(createCategoryDto);
+    return ApiResponseHelper.success(category, 'Category created successfully');
   }
 
   @ApiOkResponse({
-    type: InfinityPaginationResponse(Category),
+    description: 'Categories retrieved successfully',
+    type: ApiPaginatedResponseDto,
   })
   @Get()
   @HttpCode(HttpStatus.OK)
   async findAll(
     @Query() query: QueryCategoryDto,
-  ): Promise<InfinityPaginationResponseDto<Category>> {
+  ): Promise<ApiResponse<InfinityPaginationResponseDto<Category>>> {
     const page = query?.page ?? 1;
     let limit = query?.limit ?? 10;
     if (limit > 50) {
       limit = 50;
     }
 
-    return infinityPagination(
+    const paginationResult = infinityPagination(
       await this.categoriesService.findManyWithPagination({
         filterOptions: query?.filters,
         sortOptions: query?.sort,
@@ -79,10 +86,16 @@ export class CategoriesController {
       }),
       { page, limit },
     );
+
+    return ApiResponseHelper.success(
+      paginationResult,
+      'Categories retrieved successfully',
+    );
   }
 
   @ApiOkResponse({
-    type: Category,
+    description: 'Category retrieved successfully',
+    type: ApiResponseDto,
   })
   @Get('slug/:slug')
   @HttpCode(HttpStatus.OK)
@@ -91,12 +104,22 @@ export class CategoriesController {
     type: String,
     required: true,
   })
-  findBySlug(@Param('slug') slug: string): Promise<NullableType<Category>> {
-    return this.categoriesService.findBySlug(slug);
+  async findBySlug(
+    @Param('slug') slug: string,
+  ): Promise<ApiResponse<NullableType<Category>>> {
+    const category = await this.categoriesService.findBySlug(slug);
+    if (!category) {
+      return ApiResponseHelper.error('Category not found', 'NOT_FOUND');
+    }
+    return ApiResponseHelper.success(
+      category,
+      'Category retrieved successfully',
+    );
   }
 
   @ApiOkResponse({
-    type: Category,
+    description: 'Category retrieved successfully',
+    type: ApiResponseDto,
   })
   @Get(':id')
   @HttpCode(HttpStatus.OK)
@@ -105,15 +128,25 @@ export class CategoriesController {
     type: String,
     required: true,
   })
-  findOne(@Param('id') id: Category['id']): Promise<NullableType<Category>> {
-    return this.categoriesService.findById(id);
+  async findOne(
+    @Param('id') id: Category['id'],
+  ): Promise<ApiResponse<NullableType<Category>>> {
+    const category = await this.categoriesService.findById(id);
+    if (!category) {
+      return ApiResponseHelper.error('Category not found', 'NOT_FOUND');
+    }
+    return ApiResponseHelper.success(
+      category,
+      'Category retrieved successfully',
+    );
   }
 
   @ApiBearerAuth()
   @Roles(RoleEnum.admin)
   @UseGuards(AuthGuard('jwt'), RolesGuard)
   @ApiOkResponse({
-    type: Category,
+    description: 'Category updated successfully',
+    type: ApiResponseDto,
   })
   @Patch(':id')
   @HttpCode(HttpStatus.OK)
@@ -122,24 +155,33 @@ export class CategoriesController {
     type: String,
     required: true,
   })
-  update(
+  async update(
     @Param('id') id: Category['id'],
     @Body() updateCategoryDto: UpdateCategoryDto,
-  ): Promise<Category | null> {
-    return this.categoriesService.update(id, updateCategoryDto);
+  ): Promise<ApiResponse<Category | null>> {
+    const category = await this.categoriesService.update(id, updateCategoryDto);
+    if (!category) {
+      return ApiResponseHelper.error('Category not found', 'NOT_FOUND');
+    }
+    return ApiResponseHelper.success(category, 'Category updated successfully');
   }
 
   @ApiBearerAuth()
   @Roles(RoleEnum.admin)
   @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @ApiOkResponse({
+    description: 'Category deleted successfully',
+    type: ApiResponseDto,
+  })
   @Delete(':id')
   @ApiParam({
     name: 'id',
     type: String,
     required: true,
   })
-  @HttpCode(HttpStatus.NO_CONTENT)
-  remove(@Param('id') id: Category['id']): Promise<void> {
-    return this.categoriesService.remove(id);
+  @HttpCode(HttpStatus.OK)
+  async remove(@Param('id') id: Category['id']): Promise<ApiResponse<null>> {
+    await this.categoriesService.remove(id);
+    return ApiResponseHelper.success(null, 'Category deleted successfully');
   }
 }

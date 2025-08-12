@@ -25,14 +25,15 @@ import { Roles } from '../roles/roles.decorator';
 import { RoleEnum } from '../roles/roles.enum';
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from '../roles/roles.guard';
-import {
-  InfinityPaginationResponse,
-  InfinityPaginationResponseDto,
-} from '../utils/dto/infinity-pagination-response.dto';
-import { NullableType } from '../utils/types/nullable.type';
 import { Post as PostDomain } from './domain/post';
 import { PostsService } from './posts.service';
 import { infinityPagination } from '../utils/infinity-pagination';
+import {
+  ApiResponse,
+  ApiResponseHelper,
+  ApiResponseType,
+  ApiPaginatedResponseType,
+} from '../utils/api-response';
 
 @ApiTags('Posts')
 @Controller({
@@ -46,43 +47,51 @@ export class PostsController {
   @Roles(RoleEnum.admin)
   @UseGuards(AuthGuard('jwt'), RolesGuard)
   @ApiCreatedResponse({
-    type: PostDomain,
+    type: ApiResponseType(PostDomain),
   })
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  create(@Body() createPostDto: CreatePostDto): Promise<PostDomain> {
-    return this.postsService.create(createPostDto);
+  async create(
+    @Body() createPostDto: CreatePostDto,
+  ): Promise<ApiResponse<PostDomain>> {
+    const post = await this.postsService.create(createPostDto);
+    return ApiResponseHelper.success(post, 'Post created successfully');
   }
 
   @ApiOkResponse({
-    type: InfinityPaginationResponse(PostDomain),
+    type: ApiPaginatedResponseType(PostDomain),
   })
   @Get()
   @HttpCode(HttpStatus.OK)
   async findAll(
     @Query() query: QueryPostDto,
-  ): Promise<InfinityPaginationResponseDto<PostDomain>> {
+  ): Promise<ApiResponse<{ data: PostDomain[]; hasNextPage: boolean }>> {
     const page = query?.page ?? 1;
     let limit = query?.limit ?? 10;
     if (limit > 50) {
       limit = 50;
     }
 
-    return infinityPagination(
-      await this.postsService.findManyWithPagination({
-        filterOptions: query?.filters,
-        sortOptions: query?.sort,
-        paginationOptions: {
-          page,
-          limit,
-        },
-      }),
-      { page, limit },
+    const posts = await this.postsService.findManyWithPagination({
+      filterOptions: query?.filters,
+      sortOptions: query?.sort,
+      paginationOptions: {
+        page,
+        limit,
+      },
+    });
+
+    const paginationData = infinityPagination(posts, { page, limit });
+
+    return ApiResponseHelper.successPaginated(
+      paginationData.data,
+      paginationData.hasNextPage,
+      'Posts retrieved successfully',
     );
   }
 
   @ApiOkResponse({
-    type: PostDomain,
+    type: ApiResponseType(PostDomain),
   })
   @Get(':id')
   @HttpCode(HttpStatus.OK)
@@ -91,12 +100,21 @@ export class PostsController {
     type: String,
     required: true,
   })
-  findOne(@Param('id') id: string): Promise<NullableType<PostDomain>> {
-    return this.postsService.findOne(id);
+  async findOne(
+    @Param('id') id: string,
+  ): Promise<ApiResponse<PostDomain | null>> {
+    const post = await this.postsService.findOne(id);
+    if (!post) {
+      return ApiResponseHelper.error<PostDomain | null>(
+        'Post not found',
+        'The requested post does not exist',
+      );
+    }
+    return ApiResponseHelper.success(post, 'Post retrieved successfully');
   }
 
   @ApiOkResponse({
-    type: PostDomain,
+    type: ApiResponseType(PostDomain),
   })
   @Get('slug/:slug')
   @HttpCode(HttpStatus.OK)
@@ -105,15 +123,24 @@ export class PostsController {
     type: String,
     required: true,
   })
-  findBySlug(@Param('slug') slug: string): Promise<NullableType<PostDomain>> {
-    return this.postsService.findBySlug(slug);
+  async findBySlug(
+    @Param('slug') slug: string,
+  ): Promise<ApiResponse<PostDomain | null>> {
+    const post = await this.postsService.findBySlug(slug);
+    if (!post) {
+      return ApiResponseHelper.error<PostDomain | null>(
+        'Post not found',
+        'The requested post does not exist',
+      );
+    }
+    return ApiResponseHelper.success(post, 'Post retrieved successfully');
   }
 
   @ApiBearerAuth()
   @Roles(RoleEnum.admin)
   @UseGuards(AuthGuard('jwt'), RolesGuard)
   @ApiOkResponse({
-    type: PostDomain,
+    type: ApiResponseType(PostDomain),
   })
   @Patch(':id')
   @HttpCode(HttpStatus.OK)
@@ -122,11 +149,18 @@ export class PostsController {
     type: String,
     required: true,
   })
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updatePostDto: UpdatePostDto,
-  ): Promise<PostDomain | null> {
-    return this.postsService.update(id, updatePostDto);
+  ): Promise<ApiResponse<PostDomain | null>> {
+    const post = await this.postsService.update(id, updatePostDto);
+    if (!post) {
+      return ApiResponseHelper.error<PostDomain | null>(
+        'Post not found',
+        'The requested post does not exist',
+      );
+    }
+    return ApiResponseHelper.success(post, 'Post updated successfully');
   }
 
   @ApiBearerAuth()

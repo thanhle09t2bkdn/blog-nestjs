@@ -5,6 +5,7 @@ A comprehensive, production-ready NestJS boilerplate with TypeScript, featuring 
 ## 🚀 Features
 
 ### Core Features
+
 - **NestJS Framework** - Progressive Node.js framework for building efficient server-side applications
 - **TypeScript** - Full TypeScript support with strict type checking
 - **PostgreSQL Database** - Relational database with TypeORM integration
@@ -20,6 +21,7 @@ A comprehensive, production-ready NestJS boilerplate with TypeScript, featuring 
 - **Testing** - Unit and E2E tests with Jest
 
 ### Blog System Features
+
 - **Posts Management** - Full CRUD operations for blog posts
 - **Categories** - Hierarchical category system
 - **Tags** - Many-to-many tagging system
@@ -31,7 +33,7 @@ A comprehensive, production-ready NestJS boilerplate with TypeScript, featuring 
 
 ## 📋 Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - PostgreSQL 12+
 - Docker (optional, for containerized setup)
 
@@ -166,6 +168,7 @@ Once the application is running, you can access:
 The API uses JWT tokens for authentication:
 
 ### Admin Login
+
 ```bash
 POST /api/v1/auth/email/login
 {
@@ -175,6 +178,7 @@ POST /api/v1/auth/email/login
 ```
 
 ### User Registration
+
 ```bash
 POST /api/v1/auth/email/register
 {
@@ -186,6 +190,7 @@ POST /api/v1/auth/email/register
 ```
 
 ### Social Authentication
+
 - `POST /api/v1/auth/google/login`
 - `POST /api/v1/auth/facebook/login`
 - `POST /api/v1/auth/apple/login`
@@ -193,6 +198,7 @@ POST /api/v1/auth/email/register
 ## 📝 API Endpoints
 
 ### Posts
+
 - `GET /api/v1/posts` - List posts with pagination
 - `GET /api/v1/posts/:id` - Get single post
 - `POST /api/v1/posts` - Create post (Admin only)
@@ -200,6 +206,7 @@ POST /api/v1/auth/email/register
 - `DELETE /api/v1/posts/:id` - Delete post (Admin only)
 
 ### Categories
+
 - `GET /api/v1/categories` - List categories
 - `GET /api/v1/categories/:id` - Get single category
 - `POST /api/v1/categories` - Create category (Admin only)
@@ -207,6 +214,7 @@ POST /api/v1/auth/email/register
 - `DELETE /api/v1/categories/:id` - Delete category (Admin only)
 
 ### Tags
+
 - `GET /api/v1/tags` - List tags
 - `GET /api/v1/tags/:id` - Get single tag
 - `POST /api/v1/tags` - Create tag (Admin only)
@@ -214,6 +222,7 @@ POST /api/v1/auth/email/register
 - `DELETE /api/v1/tags/:id` - Delete tag (Admin only)
 
 ### Users
+
 - `GET /api/v1/users` - List users (Admin only)
 - `GET /api/v1/users/:id` - Get user (Admin only)
 - `POST /api/v1/users` - Create user (Admin only)
@@ -221,6 +230,7 @@ POST /api/v1/auth/email/register
 - `DELETE /api/v1/users/:id` - Delete user (Admin only)
 
 ### Files
+
 - `POST /api/v1/files/upload` - Upload file
 - `GET /api/v1/files/:path` - Get file
 
@@ -244,21 +254,25 @@ src/
 ## 🧪 Testing
 
 ### Unit Tests
+
 ```bash
 npm run test
 ```
 
 ### E2E Tests
+
 ```bash
 npm run test:e2e
 ```
 
 ### Test Coverage
+
 ```bash
 npm run test:cov
 ```
 
 ### Docker E2E Tests
+
 ```bash
 npm run test:e2e:relational:docker
 ```
@@ -266,21 +280,25 @@ npm run test:e2e:relational:docker
 ## 📊 Database Management
 
 ### Create Migration
+
 ```bash
 npm run migration:create -- src/database/migrations/CreateNewTable
 ```
 
 ### Generate Migration
+
 ```bash
 npm run migration:generate -- src/database/migrations/AddNewColumn
 ```
 
 ### Run Migrations
+
 ```bash
 npm run migration:run
 ```
 
 ### Revert Migration
+
 ```bash
 npm run migration:revert
 ```
@@ -288,11 +306,13 @@ npm run migration:revert
 ## 🎨 Code Generation
 
 ### Generate Resource
+
 ```bash
 npm run generate:resource:relational
 ```
 
 ### Add Property to Resource
+
 ```bash
 npm run add:property:to-relational
 ```
@@ -300,11 +320,13 @@ npm run add:property:to-relational
 ## 🔧 Development Tools
 
 ### Formatting
+
 ```bash
 npm run format
 ```
 
 ### Linting
+
 ```bash
 npm run lint
 ```
@@ -312,12 +334,15 @@ npm run lint
 ## 🚀 Deployment
 
 ### Build for Production
+
 ```bash
 npm run build
 ```
 
 ### Environment Variables for Production
+
 Ensure all required environment variables are set:
+
 - `NODE_ENV=production`
 - Database connection details
 - JWT secrets
